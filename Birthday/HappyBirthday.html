@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Sayne! 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --pink: #e86a92;
+        --pink2: #f7a7c0;
+        --paper: #fffdf8;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #ffe3ee, #fff6ef);
+        overflow: hidden;
+        position: relative;
+    }
+    .float-item {
+        position: absolute;
+        pointer-events: none;
+        z-index: 1;
+        animation: gentleFloat linear infinite;
+    }
+    @keyframes gentleFloat {
+        0% { transform: translateY(100vh) rotate(0deg); opacity: 0.6; }
+        100% { transform: translateY(-120px) rotate(360deg); opacity: 0; }
+    }
+    .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        opacity: 0.9;
+        pointer-events: none;
+        z-index: 10;
+        animation: fall linear forwards;
+    }
+    @keyframes fall {
+        to { transform: translateY(110vh) rotate(720deg); }
+    }
+    .balloon {
+        position: absolute;
+        font-size: 34px;
+        opacity: 0.9;
+        pointer-events: none;
+        z-index: 11;
+        animation: rise linear forwards;
+    }
+    @keyframes rise {
+        to { transform: translateY(-110vh) translateX(25px); }
+    }
+    .card {
+        width: 460px;
+        height: 320px;
+        position: relative;
+        perspective: 1400px;
+        cursor: pointer;
+        z-index: 5;
+    }
+    @media (max-width: 500px) {
+        .card { width: 94vw; height: 310px; }
+        .letter { padding: 26px 20px !important; height: 520px !important; }
+        h1 { font-size: 1.52rem !important; }
+        p { font-size: 0.93rem !important; max-width: 270px !important; }
+        .flow { font-size: 23px !important; }
+    }
+    .card::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -26px;
+        width: 270px;
+        height: 22px;
+        background: rgba(0,0,0,.16);
+        border-radius: 50%;
+        transform: translateX(-50%);
+        filter: blur(12px);
+        z-index: 0;
+    }
+    .env {
+        position: absolute;
+        inset: 0;
+        border-radius: 20px;
+        background: linear-gradient(var(--pink2), var(--pink));
+        box-shadow: 0 20px 45px rgba(212, 106, 138, 0.45);
+        overflow: hidden;
+    }
+    .flap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60%;
+        background: linear-gradient(#ef7ca5, #d85b84);
+        clip-path: polygon(0 0, 50% 74%, 100% 0);
+        transform-origin: top;
+        transition: transform 1.05s cubic-bezier(0.55, 0.0, 0.35, 1);
+        z-index: 6;
+    }
+    .seal {
+        position: absolute;
+        left: 50%;
+        top: 42%;
+        transform: translate(-50%, -50%);
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: #b41d48;
+        color: #ffd76a;
+        display: grid;
+        place-items: center;
+        font-size: 27px;
+        z-index: 7;
+        box-shadow: 0 5px 14px rgba(0,0,0,0.3);
+        transition: opacity .2s ease, transform .2s ease;
+    }
+    .letter {
+        position: absolute;
+        left: 4%;
+        top: 5%;
+        width: 92%;
+        height: 480px;
+        background: linear-gradient(#fffdf8, #fffdf8), repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(255,210,220,.18) 28px);
+        border-radius: 14px;
+        padding: 32px 26px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        transform: translateY(135%);
+        transition: transform 1.05s cubic-bezier(0.55, 0.0, 0.35, 1);
+        overflow-y: auto;
+        z-index: 4;
+        text-align: center;
+    }
+    .letter::before {
+        content: "";
+        position: absolute;
+        inset: 14px;
+        border: 1px solid #ecd6c7;
+        border-radius: 10px;
+        pointer-events: none;
+    }
+    .card.open .flap { transform: rotateX(180deg); z-index: 1; }
+    .card.open .seal { opacity: 0; transform: translate(-50%, -65%) scale(0.15); }
+    .card.open .letter { transform: translateY(-98px); z-index: 7; }
+
+    h1 {
+        font-family: "Playfair Display", serif;
+        color: #d14c79;
+        margin-bottom: 18px;
+        line-height: 1.15;
+        font-size: 1.7rem;
+    }
+    p {
+        line-height: 1.75;
+        color: #444;
+        margin: 16px auto;
+        font-size: 0.97rem;
+        max-width: 310px;
+        text-align: center;
+    }
+    .flow {
+        display: flex;
+        justify-content: space-between;
+        font-size: 26px;
+        margin-bottom: 12px;
+    }
+    .signature {
+        margin-top: 28px;
+        font-style: italic;
+        color: #666;
+        font-size: 0.95rem;
+    }
+
+    #close-btn {
+        margin-top: 24px;
+        padding: 10px 24px;
+        background: #d14c79;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(209, 76, 121, 0.3);
+        transition: all 0.3s ease;
+    }
+    #close-btn:hover {
+        background: #b41d48;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(209, 76, 121, 0.4);
+    }
+
+    #music-btn {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        z-index: 20;
+        background: rgba(255,255,255,0.9);
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 24px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+</style>
+</head>
+<body>
+
+<div class="card" id="card">
+    <div class="env">
+        <div class="flap"></div>
+        <div class="seal">❤</div>
+       
+        <div class="letter">
+            <div class="flow">
+                <span>🌸</span>
+                <span>🌼</span>
+            </div>
+            <h1>Happy Birthday,<br>Sayne 🎂</h1>
+           
+            <p>Hey Sayne,</p>
+           
+            <p>Happy Birthday! I hope today brings you plenty of reasons to smile and reminds you just how appreciated you are.</p>
+           
+            <p>Thank you for being part of my story. I hope you continue reading, writing, studying, and creating beautiful things, because the world could always use more of that.</p>
+           
+            <p>Whatever this new year of your life brings, I hope it's filled with peace, growth, good memories, and people who make your days a little brighter.</p>
+           
+            <p>Happy Birthday, and take care always. 🌸</p>
+           
+            <p class="signature">Love, Ryle</p>
+
+            <button id="close-btn">Close Letter</button>
+        </div>
+    </div>
+</div>
+
+<!-- Soft Music Box / Piano Happy Birthday -->
+<audio id="birthday-music" loop>
+    <source src="music-box-birthday.mp3.mp3" type="audio/mpeg"> <!-- placeholder, will replace -->
+</audio>
+
+<button id="music-btn">🎵</button>
+
+<script>
+// Audio
+const music = document.getElementById('birthday-music');
+const musicBtn = document.getElementById('music-btn');
+
+function toggleMusic() {
+    if (music.paused) {
+        music.play().catch(() => {});
+        musicBtn.textContent = '⏸️';
+    } else {
+        music.pause();
+        musicBtn.textContent = '🎵';
+    }
+}
+
+// Falling Confetti + Rising Balloons
+function createOpeningEffects() {
+    const colors = ['#e86a92', '#f7a7c0', '#ffd76a', '#ffffff', '#b41d48', '#87ceeb'];
+    const emojis = ['🎈', '🎈', '💖', '🌟'];
+    
+    for (let i = 0; i < 70; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.background = colors[Math.floor(Math.random() * colors.length)];
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.top = '-40px';
+        c.style.width = Math.random() * 11 + 8 + 'px';
+        c.style.height = c.style.width;
+        if (Math.random() > 0.5) c.style.borderRadius = '50%';
+        const dur = Math.random() * 4.2 + 3.8;
+        c.style.animationDuration = dur + 's';
+        c.style.animationDelay = Math.random() * 0.6 + 's';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), (dur + 1) * 1000);
+    }
+    
+    for (let i = 0; i < 16; i++) {
+        const b = document.createElement('div');
+        b.className = 'balloon';
+        b.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        b.style.left = Math.random() * 96 + 'vw';
+        b.style.top = '105vh';
+        const dur = Math.random() * 5.5 + 5.5;
+        b.style.animationDuration = dur + 's';
+        b.style.animationDelay = Math.random() * 0.8 + 's';
+        document.body.appendChild(b);
+        setTimeout(() => b.remove(), (dur + 2) * 1000);
+    }
+}
+
+// Continuous floating
+function createFloatingItems() {
+    const container = document.body;
+    const items = ['✨', '🌸', '🎈', '💖', '🌟'];
+    setInterval(() => {
+        const item = document.createElement('div');
+        item.className = 'float-item';
+        item.textContent = items[Math.floor(Math.random() * items.length)];
+        item.style.left = Math.random() * 100 + 'vw';
+        item.style.fontSize = (Math.random() * 18 + 14) + 'px';
+        item.style.opacity = 0.6;
+        const duration = Math.random() * 19 + 23;
+        item.style.animationDuration = duration + 's';
+        item.style.animationDelay = '-' + Math.random() * 15 + 's';
+        container.appendChild(item);
+        setTimeout(() => item.remove(), duration * 1000 + 2000);
+    }, 420);
+}
+createFloatingItems();
+
+// Card logic
+const card = document.getElementById('card');
+const closeBtn = document.getElementById('close-btn');
+
+card.addEventListener('click', (e) => {
+    if (e.target.id === 'close-btn') return;
+    
+    const wasOpen = card.classList.contains('open');
+    card.classList.toggle('open');
+   
+    if (!wasOpen) {
+        createOpeningEffects();
+        music.currentTime = 0;
+        music.play().catch(() => {});
+        musicBtn.textContent = '⏸️';
+    } else {
+        music.pause();
+        musicBtn.textContent = '🎵';
+    }
+});
+
+closeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    card.classList.remove('open');
+    music.pause();
+    musicBtn.textContent = '🎵';
+});
+
+musicBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMusic();
+});
+</script>
+</body>
+</html>
